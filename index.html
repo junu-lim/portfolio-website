@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Junu Kandangwa UI/UX Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&family=Inter:wght@400;600;700;900&family=Poppins:wght@400;500;600;700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge legacy */
+    }
+    html::-webkit-scrollbar { display: none; /* Chrome, Edge, Safari */ }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #ffffff;
+      color: #191d21;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    /* ----- whole page capped at 1400px, centered, matching Paul Hahn's canvas width ----- */
+    .site-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: #ffffff;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .badge {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.03em;
+      color: #4d80d1;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    h1, h2, h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .education-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e3e3e3;
+    }
+    .education-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #4d80d11a;
+      flex-shrink: 0;
+    }
+    .education-icon svg { width: 22px; height: 22px; color: #4d80d1; }
+    .education-text .education-label {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #4d80d1;
+      margin-bottom: 0.3rem;
+    }
+    .education-text h4 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #191d21;
+      line-height: 1.3;
+      margin-bottom: 0.2rem;
+    }
+    .education-text p {
+      font-size: 0.9rem;
+      color: rgba(25,29,33,0.6);
+    }
+    .education-text .education-affiliation {
+      font-size: 0.8rem;
+      color: rgba(25,29,33,0.45);
+      margin-top: 0.1rem;
+    }
+    h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); }
+    h2 { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 0.25rem; }
+    h3 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .text-muted { color: rgba(25, 29, 33, 0.7); }
+    .text-small { font-size: 0.9rem; }
+
+    section { padding: 4rem 0; }
+    .section-title { margin-bottom: 2.5rem; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    .card {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid #ededed;
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 0.6px 0.6px rgba(0,0,0,0.07), 0 2.3px 2.3px rgba(0,0,0,0.06), 0 10px 10px rgba(0,0,0,0.03);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12), 0 8px 16px -8px rgba(0,0,0,0.08);
+      border-color: transparent;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: inherit;
+      padding: 2px;
+      background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .card:hover::before { opacity: 1; }
+    .card.coming-soon { overflow: hidden; }
+    .card.coming-soon .card-inner {
+      filter: blur(4px);
+      opacity: 0.55;
+      user-select: none;
+      pointer-events: none;
+      transition: filter 0.35s, opacity 0.35s;
+    }
+    .card.coming-soon:hover .card-inner { filter: blur(5px); }
+    .coming-soon-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(#ffffff 0%, #f2f2f2 100%);
+      border: 1px solid #e2e2e2;
+      border-radius: 500px;
+      padding: 0.5rem 1.1rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #4d80d1;
+      white-space: nowrap;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    .coming-soon-badge svg { width: 14px; height: 14px; stroke: #4d80d1; flex-shrink: 0; }
+    .card-icon {
+      display: inline-flex;
+      margin-bottom: 1rem;
+    }
+    .card-icon svg { width: 24px; height: 24px; color: #4d80d1; }
+    .card-icon img { width: 52px; height: 52px; object-fit: contain; display: block; }
+    .card-accent { background: #4d80d1; border-color: #4d80d1; color: white; }
+    .card-accent .card-icon svg { color: white; }
+    .card-accent .text-muted { color: rgba(255,255,255,0.8); }
+
+    .project-card {
+      display: block;
+      position: relative;
+      background: #fff;
+      border: 1px solid #ededed;
+      border-radius: 24px;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12), 0 8px 16px -8px rgba(0,0,0,0.08);
+      border-color: transparent;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: inherit;
+      padding: 2px;
+      background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .project-card:hover::before { opacity: 1; }
+    .project-card .project-img-wrap {
+      overflow: hidden;
+      width: 100%;
+      height: 200px;
+    }
+    .project-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #f2f2f2;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .project-card:hover img { transform: scale(1.08); }
+    .project-body { padding: 1.25rem 1.5rem 1.5rem; }
+    .project-tag {
+      background: #e8e8e8;
+      border-radius: 500px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+      color: #191d21;
+      transition: background 0.3s, color 0.3s;
+    }
+    .project-card:hover .project-tag { background: #4d80d1; color: #ffffff; }
+    .project-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .project-title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 1.3rem; }
+    .project-arrow {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f2f2f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-45deg) scale(0.8);
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s, background 0.35s;
+    }
+    .project-card:hover .project-arrow {
+      transform: rotate(0deg) scale(1);
+      opacity: 1;
+      background: #4d80d1;
+    }
+    .project-arrow svg { width: 16px; height: 16px; stroke: #191d21; transition: stroke 0.3s; }
+    .project-card:hover .project-arrow svg { stroke: #ffffff; }
+
+    .btn {
+      display: inline-block;
+      background: #191d21;
+      color: white;
+      padding: 0.7rem 2rem;
+      border-radius: 500px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover { opacity: 0.85; transform: scale(0.98); }
+
+    /* ----- navbar: scrolls away (not fixed), blurred, rounded bottom corners only ----- */
+    .navbar-wrap {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1400px;
+      display: flex;
+      justify-content: center;
+      z-index: 100;
+    }
+    .navbar {
+      width: 100%;
+      max-width: 1352px;
+      height: 80px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 0.6px 0.6px rgba(0,0,0,0.18), 0 2.3px 2.3px rgba(0,0,0,0.16), 0 10px 10px rgba(0,0,0,0.06);
+    }
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      max-width: 1170px;
+    }
+    .logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: rgba(25,29,33,0.6);
+    }
+    .logo strong { color: #191d21; font-weight: 600; }
+    .nav-right { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; font-weight: 450; }
+    .nav-links a { font-size: 0.95rem; color: #191d21; transition: 0.15s; }
+    .nav-links a:hover { color: #4d80d1; }
+    .nav-links-contact { display: none; }
+    .nav-cta {
+      background: #191d21;
+      color: white !important;
+      padding: 0.5rem 1.5rem;
+      border-radius: 500px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .nav-cta:hover { background: #2d3238; color: white !important; }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      color: #191d21;
+      flex-shrink: 0;
+    }
+    .menu-toggle:hover { background: #f2f2f2; }
+    .menu-toggle svg { width: 22px; height: 22px; }
+    .menu-toggle .icon-close { display: none; }
+    .menu-toggle.open .icon-menu { display: none; }
+    .menu-toggle.open .icon-close { display: block; }
+
+    /* ----- HERO: full-height flex wrapper with an inset, fully-rounded floating card ----- */
+    .hero-outer {
+      height: 100vh;
+      display: flex;
+      place-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 104px 0 24px;
+    }
+    .hero {
+      height: 100%;
+      background: #f2f2f2;
+      border-radius: 40px;
+      flex: 1 0 0;
+      display: flex;
+      flex-direction: column;
+      place-content: center;
+      align-items: center;
+      gap: 40px;
+      width: 1px; /* flex-grow trick so it fills available width */
+      padding: 0 24px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(#f2f2f2 0%, #e6e6e6 100%);
+      border: 1px solid #d9d9d9;
+      border-radius: 500px;
+      padding: 0.5rem 1.1rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #191d21;
+    }
+    .hero-headline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .hero-headline h1 {
+      font-size: clamp(3rem, 9vw, 6rem);
+      white-space: nowrap;
+    }
+    .hero-photo {
+      border-radius: 14px;
+      border: 4px solid #ffffff;
+      box-shadow: 0 30px 40px -10px rgba(0,0,0,0.18), 0 12px 15px -5px rgba(0,0,0,0.12);
+      width: 180px;
+      height: 190px;
+      object-fit: cover;
+      transform: rotate(6deg);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .hero-photo:hover { transform: rotate(0deg) scale(1.02); }
+    .hero p.subtitle {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.15rem;
+      max-width: 560px;
+      margin: 0 auto;
+      color: rgba(25,29,33,0.7);
+      line-height: 1.8;
+    }
+
+    /* ----- scroll-down indicator (double chevron, bouncing) ----- */
+    /* ----- social icon buttons: roll-reveal hover, matching Paul Hahn exactly ----- */
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: #f2f2f2;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-btn .icon-layer {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .icon-btn .icon-muted { transform: translateY(0); }
+    .icon-btn .icon-color { transform: translateY(-40px); }
+    .icon-btn:hover .icon-muted { transform: translateY(40px); }
+    .icon-btn:hover .icon-color { transform: translateY(0); }
+
+    /* ----- tool icon buttons (About section): same roll-reveal, white bg for contrast on #f7f7f7 ----- */
+    .tool-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid #e6e6e6;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .tool-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0,0,0,0.08); }
+    .tool-btn .icon-layer {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tool-btn .icon-muted { transform: translateY(0); }
+    .tool-btn .icon-color { transform: translateY(-48px); }
+    .tool-btn:hover .icon-muted { transform: translateY(48px); }
+    .tool-btn:hover .icon-color { transform: translateY(0); }
+    .tools-row { display: flex; flex-direction: column; gap: 0.85rem; }
+    .about-media { display: flex; align-items: center; justify-content: center; gap: 1.75rem; }
+    @media (max-width: 640px) {
+      .about-media { flex-direction: column-reverse; gap: 1.25rem; }
+      .tools-row { flex-direction: row; }
+    }
+
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      margin-top: 3rem;
+      cursor: pointer;
+      opacity: 0.45;
+      transition: opacity 0.2s;
+    }
+    .scroll-indicator:hover { opacity: 0.8; }
+    .scroll-indicator svg {
+      width: 22px;
+      height: 22px;
+      stroke: #191d21;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .scroll-indicator svg:nth-child(1) { animation: chevron-bounce 1.6s ease-in-out infinite; }
+    .scroll-indicator svg:nth-child(2) { animation: chevron-bounce 1.6s ease-in-out infinite; animation-delay: 0.2s; margin-top: -10px; }
+    @keyframes chevron-bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.4; }
+      50% { transform: translateY(6px); opacity: 1; }
+    }
+
+    /* ----- typewriter effect for "I'm Junu!" ----- */
+    .typewriter-cursor {
+      display: inline-block;
+      width: 4px;
+      background: #191d21;
+      margin-left: 4px;
+      animation: blink 0.9s step-end infinite;
+      vertical-align: -0.1em;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ----- spring entrance animation for hero content (not navbar) ----- */
+    .spring-in {
+      opacity: 0;
+      transform: translateY(28px) scale(0.96);
+      animation: spring-in 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes spring-in {
+      0% { opacity: 0; transform: translateY(28px) scale(0.96); }
+      60% { opacity: 1; transform: translateY(-4px) scale(1.01); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .spring-delay-0 { animation-delay: 0.05s; }
+    .spring-delay-1 { animation-delay: 0.15s; }
+    .spring-delay-2 { animation-delay: 0.28s; }
+    .spring-delay-3 { animation-delay: 0.42s; }
+    .spring-delay-4 { animation-delay: 0.58s; }
+    .spring-delay-5 { animation-delay: 0.75s; }
+
+    /* ----- badge: fade + scale up from 80% (matches original), triggered via JS ----- */
+    .badge-pop-play {
+      animation: badge-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes badge-pop {
+      0% { opacity: 0; transform: translateY(4px) scale(0.8); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ----- photo: scale-in pop from 50% (matches original), triggered via JS ----- */
+    .photo-pop-play {
+      animation: photo-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes photo-pop {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .container { padding: 0 20px; }
+    }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr 1fr; }
+      section { padding: 3rem 0; }
+      .hero-outer { padding: 96px 0 20px; }
+    }
+
+    @media (max-width: 640px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .container { padding: 0 18px; }
+      section { padding: 2.5rem 0; }
+
+      .navbar { height: 68px; }
+      .logo { font-size: 1.3rem; }
+      .nav-right { gap: 0.75rem; }
+      .nav-cta { display: none; }
+      .menu-toggle { display: flex; }
+
+      .nav-links {
+        position: fixed;
+        top: 78px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+        width: calc(100% - 36px);
+        max-width: 380px;
+        background: rgba(255,255,255,0.97);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid #ededed;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        z-index: 99;
+      }
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
+      }
+      .nav-links a {
+        display: block;
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        font-size: 1rem;
+      }
+      .nav-links a:hover { background: #f7f7f7; color: #4d80d1; }
+      .nav-links-contact { display: block; }
+
+      .hero-outer { height: auto; min-height: 100vh; padding: 88px 0 32px; }
+      .hero { border-radius: 28px; gap: 28px; }
+      .hero-badge { font-size: 0.7rem; padding: 0.45rem 0.9rem; }
+      .hero-photo { width: 120px; height: 130px; }
+      .hero-headline { gap: 1rem; }
+      .hero-headline h1 { font-size: clamp(2.2rem, 12vw, 3rem); }
+      .hero p.subtitle { font-size: 1rem; padding: 0 8px; }
+
+      .card { padding: 1.15rem; }
+      .project-body { padding: 1rem 1.15rem 1.15rem; }
+      .project-img-wrap { height: 170px; }
+      .project-title { font-size: 1.15rem; }
+
+      .about-media { flex-direction: column-reverse; gap: 1.25rem; }
+      .tools-row { flex-direction: row; }
+
+      .btn { padding: 0.65rem 1.5rem; font-size: 0.9rem; }
+      .contact-email-btn { font-size: 0.95rem !important; padding: 0.75rem 1.5rem !important; word-break: break-word; }
+
+      .coming-soon-badge { padding: 0.45rem 0.9rem; font-size: 0.65rem; }
+    }
+
+    @media (max-width: 400px) {
+      h2 { font-size: clamp(1.6rem, 8vw, 2rem); }
+      .hero-photo { transform: rotate(0deg); }
+      .contact-email-btn { font-size: 0.85rem !important; padding: 0.7rem 1.1rem !important; }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .mt-2 { margin-top: 2rem; }
+    .gap-2 { gap: 2rem; }
+  </style>
+</head>
+<body>
+<div class="site-wrap">
+
+<!-- ===== NAVBAR (scrolls away, no language switcher) ===== -->
+<div class="navbar-wrap">
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo"><strong>Junu</strong> K.</a>
+      <div class="nav-right">
+        <div class="nav-links" id="navLinks">
+          <a href="#projects">Projects</a>
+          <a href="#about">About</a>
+          <a href="#services">Certification</a>
+          <a href="#contact" class="nav-links-contact">Contact</a>
+        </div>
+        <a href="#contact" class="nav-cta">Contact</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- ===== HERO ===== -->
+<div class="hero-outer">
+  <section class="hero" id="home">
+    <div id="hero-badge-el" class="hero-badge" style="opacity:0; transform: translateY(4px) scale(0.8);">ASPIRING UI/UX DESIGNER</div>
+    <div class="hero-headline">
+      <h1 id="typewriter-hi" style="opacity:0;" data-text="Hi,"></h1>
+      <div id="hero-photo-wrap" style="display:inline-block; opacity:0;">
+        <img class="hero-photo" src="assets/images/profile/portfolio.png" alt="Junu Kandangwa" />
+      </div>
+      <h1 id="typewriter-text" style="opacity:0;" data-text="I'm Junu!"></h1>
+    </div>
+    <p class="subtitle" style="opacity:0; transform: translateY(28px) scale(0.96);">I design simple, thoughtful digital experiences that make products easier and more enjoyable to use.</p>
+    <!-- <div style="margin-top: 2rem;" class="spring-in spring-delay-5">
+      <a href="#contact" class="btn">Start a project</a>
+    </div> -->
+
+    <a href="#projects" class="scroll-indicator spring-in spring-delay-5" aria-label="Scroll down">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </a>
+  </section>
+</div>
+
+<!-- ===== PROJECTS ===== -->
+<section id="projects">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="badge">// Projects</div>
+      <h2>Selected work</h2>
+      <p class="text-muted text-small">Modern websites with clear structure and thoughtful execution.</p>
+    </div>
+    <div class="grid-3">
+      <a href="projects/employee-monitoring-dashboard.html" class="project-card fade-up">
+        <div class="project-img-wrap">
+          <img src="assets/images/projects/employee-monitoring-dashboard.png" alt="Employee Monitoring & Productivity Dashboard" />
+        </div>
+        <div class="project-body">
+          <span class="project-tag">UI/UX Design</span>
+          <div class="project-title-row">
+            <h3 class="project-title">Employee Monitoring & Productivity Dashboard</h3>
+            <span class="project-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+          </div>
+          <p class="text-muted text-small">A productivity monitoring platform designed to help teams track employee activity, working hours, productivity, screenshots, attendance, and timesheets through a clear and organized dashboard.</p>
+        </div>
+      </a>
+      <a href="projects/ecommerce-website-ui-ux-design.html" class="project-card fade-up">
+        <div class="project-img-wrap">
+          <img src="assets/images/projects/ecommerce-website-ui-ux-design.png" alt="E-Commerce Website UI/UX Design" />
+        </div>
+        <div class="project-body">
+          <span class="project-tag">UI/UX Design · Group Project</span>
+          <div class="project-title-row">
+            <h3 class="project-title">E-Commerce Website UI/UX Design</h3>
+            <span class="project-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+          </div>
+          <p class="text-muted text-small">An e-commerce website designed with a focus on intuitive navigation, easy product browsing, and a smooth checkout experience.</p>
+        </div>
+      </a>
+      <a href="projects/real-estate-management-dashboard.html" class="project-card fade-up">
+        <div class="project-img-wrap">
+          <img src="assets/images/projects/real-estate-management-dashboard.png" alt="Real Estate Management Dashboard" />
+        </div>
+        <div class="project-body">
+          <span class="project-tag">UI/UX Design</span>
+          <div class="project-title-row">
+            <h3 class="project-title">Real Estate Management Dashboard</h3>
+            <span class="project-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+          </div>
+          <p class="text-muted text-small">A property management interface designed to make property listing and management easier, including a dashboard, property listings, details, pricing, amenities, media, and agent information.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" style="background:#f7f7f7; border-radius: 40px; margin: 0 20px 20px;">
+  <div class="container" style="padding: 2rem 0;">
+    <div class="grid-2" style="align-items: center;">
+      <div class="fade-up">
+        <div class="badge">// About ME</div>
+        <h2>Designing for people, <br />not just screens.</h2>
+        <p class="text-muted" style="margin: 1.2rem 0;">
+  I'm Junu Kandangwa, an aspiring UI/UX Designer who enjoys turning ideas
+  and user needs into simple, intuitive, and meaningful digital experiences.
+  With hands-on training at TechAxis and experience in research, wireframing,
+  prototyping, and visual design, I'm always exploring better ways to design
+  for people.
+</p>
+        <div class="education-block">
+          <div class="education-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+          </div>
+          <div class="education-text">
+            <span class="education-label">Education</span>
+            <h4>Bachelor of Information Technology (Hons)</h4>
+            <p>Padmashree College</p>
+            <p class="education-affiliation">In affiliation with Nilai University, Malaysia</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-media fade-up">
+        <img src="assets/images/profile/about-portrait.png" alt="Junu portrait" style="border-radius: 20px; max-width: 280px; border: 3px solid #e3e3e3; transform: rotate(2deg); box-shadow: 0 8px 30px rgba(0,0,0,0.06);" />
+        <div class="tools-row">
+          <a href="https://www.figma.com" target="_blank" rel="noopener" aria-label="Figma" class="tool-btn" title="Figma">
+            <span class="icon-layer icon-muted">
+              <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" width="24" height="24" alt="" style="filter: grayscale(1); opacity:0.55;" />
+            </span>
+            <span class="icon-layer icon-color">
+              <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" width="24" height="24" alt="" />
+            </span>
+          </a>
+          <a href="https://www.sketch.com" target="_blank" rel="noopener" aria-label="Sketch" class="tool-btn" title="Sketch">
+            <span class="icon-layer icon-muted">
+              <img src="https://www.vectorlogo.zone/logos/sketchapp/sketchapp-icon.svg" width="24" height="24" alt="" style="filter: grayscale(1); opacity:0.55;" />
+            </span>
+            <span class="icon-layer icon-color">
+              <img src="https://www.vectorlogo.zone/logos/sketchapp/sketchapp-icon.svg" width="24" height="24" alt="" />
+            </span>
+          </a>
+          <a href="https://www.canva.com" target="_blank" rel="noopener" aria-label="Canva" class="tool-btn" title="Canva">
+            <span class="icon-layer icon-muted">
+              <img src="https://www.vectorlogo.zone/logos/canva/canva-icon.svg" width="24" height="24" alt="" style="filter: grayscale(1); opacity:0.55;" />
+            </span>
+            <span class="icon-layer icon-color">
+              <img src="https://www.vectorlogo.zone/logos/canva/canva-icon.svg" width="24" height="24" alt="" />
+            </span>
+          </a>
+          <a href="https://www.framer.com" target="_blank" rel="noopener" aria-label="Framer" class="tool-btn" title="Framer">
+            <span class="icon-layer icon-muted">
+              <img src="https://www.vectorlogo.zone/logos/framer/framer-icon.svg" width="24" height="24" alt="" style="filter: grayscale(1); opacity:0.55;" />
+            </span>
+            <span class="icon-layer icon-color">
+              <img src="https://www.vectorlogo.zone/logos/framer/framer-icon.svg" width="24" height="24" alt="" />
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services">
+  <div class="container">
+    <div class="section-title fade-up">
+      <div class="badge">// Certifications</div>
+      <h2>Continuously learning</h2>
+      <p class="text-muted text-small">Courses and certificates that keep my skills sharp.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card coming-soon fade-up">
+        <div class="card-inner">
+          <div class="card-icon">
+            <img src="assets/images/certifications/certification-icon.png" alt="Certified badge" />
+          </div>
+          <h3>Google UX Design Certificate</h3>
+          <p class="text-muted text-small">Coursera · 2025 — end-to-end UX process, wireframing, prototyping, and usability testing.</p>
+        </div>
+        <div class="coming-soon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          More to learn
+        </div>
+      </div>
+      <div class="card card-accent fade-up">
+        <div class="card-icon">
+          <img src="assets/images/certifications/certification-icon.png" alt="Certified badge" />
+        </div>
+        <h3>UI/UX Design</h3>
+        <p class="text-muted">Techaxis · 2026 — user research, wireframing, and prototyping fundamentals.</p>
+      </div>
+      <div class="card coming-soon fade-up">
+        <div class="card-inner">
+          <div class="card-icon">
+            <img src="assets/images/certifications/certification-icon.png" alt="Certified badge" />
+          </div>
+          <h3>Meta Front-End Developer</h3>
+          <p class="text-muted text-small">Coursera · 2025 — HTML, CSS, JavaScript, React, and responsive web development.</p>
+        </div>
+        <div class="coming-soon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          More to learn
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ===== CONTACT / FOOTER ===== -->
+<section id="contact" style="background:#f2f2f2; border-radius:40px; margin:0 20px 20px;">
+  <div class="container" style="padding:2.5rem 0;">
+
+    <div style="max-width:720px; margin:0 auto; text-align:center;" class="fade-up">
+
+      <!-- Contact Badge -->
+      <div class="badge">Get in Touch</div>
+
+      <!-- Heading -->
+      <h2>Contact Me</h2>
+
+      <!-- Description -->
+      <p class="text-muted" style="margin:1rem 0 2rem;">
+        Have an idea or just a question? I'd love to hear from you.
+      </p>
+
+      <!-- Email Button -->
+      <a
+        href="mailto:zunukandgwa07@gmail.com"
+        class="btn contact-email-btn"
+        style="font-size:1.1rem; padding:0.8rem 3rem;"
+      >
+        zunukandgwa07@gmail.com
+      </a>
+
+      <!-- ===== SOCIAL ICONS ===== -->
+      <div
+        style="
+          margin-top:2.5rem;
+          display:flex;
+          gap:1rem;
+          justify-content:center;
+          flex-wrap:wrap;
+        "
+      >
+
+        <!-- ==================== EMAIL ==================== -->
+        <a
+          href="mailto:zunukandgwa07@gmail.com"
+          aria-label="Email"
+          class="icon-btn"
+        >
+          <!-- Email - Muted -->
+          <span class="icon-layer icon-muted">
+            <img
+              src="https://framerusercontent.com/images/HNTAT2JAbYDFm2YGotEn7fSelQ.png?width=48&height=36"
+              width="20"
+              height="15"
+              style="filter:grayscale(1); display:block;"
+              alt=""
+            />
+          </span>
+
+          <!-- Email - Color -->
+          <span class="icon-layer icon-color">
+            <img
+              src="https://framerusercontent.com/images/HNTAT2JAbYDFm2YGotEn7fSelQ.png?width=48&height=36"
+              width="20"
+              height="15"
+              style="filter:grayscale(0); display:block;"
+              alt=""
+            />
+          </span>
+        </a>
+
+
+        <!-- ==================== GITHUB ==================== -->
+        <a
+          href="https://github.com/junu-lim"
+          aria-label="GitHub"
+          class="icon-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          <!-- GitHub - Muted -->
+          <span class="icon-layer icon-muted">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="rgba(23,23,23,0.65)"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+              />
+            </svg>
+          </span>
+
+          <!-- GitHub - Color -->
+          <span class="icon-layer icon-color">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="#181717"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+              />
+            </svg>
+          </span>
+
+        </a>
+
+
+        <!-- ==================== LINKEDIN ==================== -->
+        <a
+          href="https://www.linkedin.com/in/junu-kandangwa-60344935b/"
+          aria-label="LinkedIn"
+          class="icon-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          <!-- LinkedIn - Muted -->
+          <span class="icon-layer icon-muted">
+            <svg
+              viewBox="0 0 20 20"
+              width="20"
+              height="20"
+              fill="rgba(23,23,23,0.7)"
+            >
+              <path
+                d="M 0 2.323 C 0 1.65 0.225 1.094 0.676 0.657 C 1.126 0.219 1.712 0 2.432 0 C 3.14 0 3.713 0.215 4.151 0.646 C 4.601 1.091 4.826 1.67 4.826 2.384 C 4.826 3.03 4.607 3.569 4.17 4 C 3.719 4.444 3.127 4.667 2.394 4.667 L 2.375 4.667 C 1.667 4.667 1.094 4.444 0.656 4 C 0.219 3.556 0 2.997 0 2.323 Z M 0.251 20 L 0.251 6.505 L 4.537 6.505 L 4.537 20 Z M 6.911 20 L 11.197 20 L 11.197 12.465 C 11.197 11.993 11.248 11.63 11.351 11.374 C 11.532 10.916 11.805 10.529 12.172 10.212 C 12.539 9.896 12.999 9.737 13.552 9.737 C 14.994 9.737 15.714 10.754 15.714 12.788 L 15.714 20 L 20 20 L 20 12.263 C 20 10.269 19.55 8.758 18.649 7.727 C 17.748 6.697 16.557 6.182 15.077 6.182 C 13.417 6.182 12.124 6.929 11.197 8.424 L 11.197 8.465 L 11.178 8.465 L 11.197 8.424 L 11.197 6.505 L 6.911 6.505 C 6.937 6.936 6.95 8.276 6.95 10.525 C 6.95 12.774 6.937 15.933 6.911 20 Z"
+              />
+            </svg>
+          </span>
+
+          <!-- LinkedIn - Color -->
+          <span class="icon-layer icon-color">
+            <svg
+              viewBox="0 0 20 20"
+              width="20"
+              height="20"
+              fill="rgb(11,102,194)"
+            >
+              <path
+                d="M 0 2.323 C 0 1.65 0.225 1.094 0.676 0.657 C 1.126 0.219 1.712 0 2.432 0 C 3.14 0 3.713 0.215 4.151 0.646 C 4.601 1.091 4.826 1.67 4.826 2.384 C 4.826 3.03 4.607 3.569 4.17 4 C 3.719 4.444 3.127 4.667 2.394 4.667 L 2.375 4.667 C 1.667 4.667 1.094 4.444 0.656 4 C 0.219 3.556 0 2.997 0 2.323 Z M 0.251 20 L 0.251 6.505 L 4.537 6.505 L 4.537 20 Z M 6.911 20 L 11.197 20 L 11.197 12.465 C 11.197 11.993 11.248 11.63 11.351 11.374 C 11.532 10.916 11.805 10.529 12.172 10.212 C 12.539 9.896 12.999 9.737 13.552 9.737 C 14.994 9.737 15.714 10.754 15.714 12.788 L 15.714 20 L 20 20 L 20 12.263 C 20 10.269 19.55 8.758 18.649 7.727 C 17.748 6.697 16.557 6.182 15.077 6.182 C 13.417 6.182 12.124 6.929 11.197 8.424 L 11.197 8.465 L 11.178 8.465 L 11.197 8.424 L 11.197 6.505 L 6.911 6.505 C 6.937 6.936 6.95 8.276 6.95 10.525 C 6.95 12.774 6.937 15.933 6.911 20 Z"
+              />
+            </svg>
+          </span>
+
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer style="background:transparent;">
+  <div 
+    class="container fade-up" 
+    style="padding:1.5rem 0 2rem; text-align:center;"
+  >
+    <p class="text-muted text-small">
+      © 2026 Junu Kandangwa. All rights reserved.
+    </p>
+  </div>
+</footer>
+<script>
+  (function() {
+    const elements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    elements.forEach(el => observer.observe(el));
+  })();
+</script>
+
+<script>
+  (function() {
+    const toggle = document.getElementById('menuToggle');
+    const links = document.getElementById('navLinks');
+    if (!toggle || !links) return;
+
+    function closeMenu() {
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    function openMenu() {
+      links.classList.add('open');
+      toggle.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    toggle.addEventListener('click', function() {
+      if (links.classList.contains('open')) closeMenu();
+      else openMenu();
+    });
+
+    links.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!links.classList.contains('open')) return;
+      if (links.contains(e.target) || toggle.contains(e.target)) return;
+      closeMenu();
+    });
+  })();
+</script>
+
+<script>
+  (function() {
+    function typeText(el, speed, onDone) {
+      if (!el) { if (onDone) onDone(); return; }
+      const fullText = el.getAttribute('data-text') || '';
+      el.textContent = '';
+      el.style.opacity = '1';
+      const cursor = document.createElement('span');
+      cursor.className = 'typewriter-cursor';
+      el.appendChild(cursor);
+      let i = 0;
+      function step() {
+        if (i < fullText.length) {
+          cursor.insertAdjacentText('beforebegin', fullText.charAt(i));
+          i++;
+          setTimeout(step, speed);
+        } else {
+          cursor.remove();
+          if (onDone) onDone();
+        }
+      }
+      setTimeout(step, speed);
+    }
+
+    const hiEl = document.getElementById('typewriter-hi');
+    const nameEl = document.getElementById('typewriter-text');
+    const photoWrap = document.getElementById('hero-photo-wrap');
+    const badgeEl = document.getElementById('hero-badge-el');
+    const subtitleEl = document.querySelector('.subtitle');
+
+    // Sequence: "Hi," types -> photo pops in -> "I'm Junu!" types -> badge pops in -> subtitle/rest
+    setTimeout(function() {
+      typeText(hiEl, 90, function() {
+        if (photoWrap) {
+          photoWrap.style.opacity = '1';
+          photoWrap.classList.add('photo-pop-play');
+        }
+        setTimeout(function() {
+          typeText(nameEl, 90, function() {
+            if (badgeEl) badgeEl.classList.add('badge-pop-play');
+            setTimeout(function() {
+              if (subtitleEl) subtitleEl.classList.add('spring-in');
+            }, 500); // wait for badge-pop to finish
+          });
+        }, 600); // wait for photo-pop animation duration
+      });
+    }, 300); // small initial delay before "Hi," starts
+  })();
+</script>
+</div>
+
+</body>
+</html>

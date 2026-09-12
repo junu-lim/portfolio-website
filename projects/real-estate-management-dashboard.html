@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real Estate Management Dashboard · Junu Kandangwa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&family=Inter:wght@400;600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #ffffff;
+      color: #191d21;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    .site-wrap { max-width: 1400px; margin: 0 auto; background: #ffffff; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1170px; margin: 0 auto; padding: 0 24px; }
+    h1 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; font-size: clamp(2.2rem, 5vw, 3.4rem); }
+    h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; letter-spacing: -0.02em; font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 0.25rem; }
+    .text-muted { color: rgba(25, 29, 33, 0.65); }
+    .badge {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.03em;
+      color: #4d80d1;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: #f2f2f2;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-btn .icon-layer {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .icon-btn .icon-muted { transform: translateY(0); }
+    .icon-btn .icon-color { transform: translateY(-40px); }
+    .icon-btn:hover .icon-muted { transform: translateY(40px); }
+    .icon-btn:hover .icon-color { transform: translateY(0); }
+    .contact-email-btn { word-break: break-word; }
+
+    .navbar-wrap { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1400px; display: flex; justify-content: center; z-index: 100; }
+    .navbar { width: 100%; max-width: 1352px; height: 80px; background: rgba(255,255,255,0.7); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; box-shadow: 0 0.6px 0.6px rgba(0,0,0,0.18), 0 2.3px 2.3px rgba(0,0,0,0.16), 0 10px 10px rgba(0,0,0,0.06); }
+    .navbar .container { display: flex; align-items: center; justify-content: space-between; height: 100%; max-width: 1170px; }
+    .logo { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 1.6rem; letter-spacing: -0.02em; color: rgba(25,29,33,0.6); }
+    .logo strong { color: #191d21; font-weight: 600; }
+    .nav-right { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; font-weight: 450; }
+    .nav-links a { font-size: 0.95rem; color: #191d21; transition: 0.15s; }
+    .nav-links a:hover { color: #4d80d1; }
+    .nav-links-contact { display: none; }
+    .nav-cta { background: #191d21; color: white !important; padding: 0.5rem 1.5rem; border-radius: 500px; font-weight: 600; font-size: 0.9rem; }
+    .nav-cta:hover { background: #2d3238; color: white !important; }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      color: #191d21;
+      flex-shrink: 0;
+    }
+    .menu-toggle:hover { background: #f2f2f2; }
+    .menu-toggle svg { width: 22px; height: 22px; }
+    .menu-toggle .icon-close { display: none; }
+    .menu-toggle.open .icon-menu { display: none; }
+    .menu-toggle.open .icon-close { display: block; }
+
+    .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: rgba(25,29,33,0.6); font-size: 0.95rem; font-weight: 500; transition: 0.2s; }
+    .back-link:hover { color: #4d80d1; transform: translateX(-2px); }
+    .back-link svg { width: 18px; height: 18px; }
+
+    .meta-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; margin: 2rem 0; }
+    .meta-items { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+    .meta-label { font-size: 0.8rem; color: rgba(25,29,33,0.5); margin-bottom: 0.25rem; }
+    .meta-value { font-weight: 600; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; background: #191d21; color: white; padding: 0.7rem 1.6rem; border-radius: 500px; font-weight: 600; font-size: 0.95rem; transition: 0.2s; }
+    .btn:hover { opacity: 0.85; }
+    .btn svg { width: 16px; height: 16px; }
+
+    .hero-image { border-radius: 24px; overflow: hidden; margin: 1rem 0 4rem; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.15); max-height: 560px; }
+    .hero-image img { width: 100%; height: 560px; object-fit: cover; }
+
+    footer { text-align: center; padding: 3rem 0; color: rgba(25,29,33,0.5); font-size: 0.9rem; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .container { padding: 0 20px; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-image { max-height: 420px; }
+      .hero-image img { height: 420px; }
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 0 18px; }
+
+      .navbar { height: 68px; }
+      .logo { font-size: 1.3rem; }
+      .nav-right { gap: 0.75rem; }
+      .nav-cta { display: none; }
+      .menu-toggle { display: flex; }
+
+      .nav-links {
+        position: fixed;
+        top: 78px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+        width: calc(100% - 36px);
+        max-width: 380px;
+        background: rgba(255,255,255,0.97);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid #ededed;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        z-index: 99;
+      }
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
+      }
+      .nav-links a {
+        display: block;
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        font-size: 1rem;
+      }
+      .nav-links a:hover { background: #f7f7f7; color: #4d80d1; }
+      .nav-links-contact { display: block; }
+
+      .back-link { font-size: 0.9rem; }
+      .meta-row { margin: 1.5rem 0; gap: 1rem; }
+      .meta-items { gap: 1.2rem; }
+      .btn { padding: 0.6rem 1.3rem; font-size: 0.88rem; }
+
+      .hero-image { border-radius: 18px; max-height: 240px; margin: 1rem 0 3rem; }
+      .hero-image img { height: 240px; }
+
+      .contact-email-btn { font-size: 0.95rem !important; padding: 0.75rem 1.5rem !important; }
+    }
+
+    @media (max-width: 400px) {
+      .hero-image { max-height: 190px; }
+      .hero-image img { height: 190px; }
+      .meta-row { flex-direction: column; align-items: flex-start; }
+      .contact-email-btn { font-size: 0.85rem !important; padding: 0.7rem 1.1rem !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="site-wrap">
+
+<div class="navbar-wrap">
+  <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo"><strong>Junu</strong> K.</a>
+      <div class="nav-right">
+        <div class="nav-links" id="navLinks">
+          <a href="../index.html#projects">Projects</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#services">Certification</a>
+          <a href="../index.html#contact" class="nav-links-contact">Contact</a>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="container" style="padding-top: 140px;">
+  <a href="../index.html#projects" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    Back
+  </a>
+
+  <h1 style="margin-top: 1.5rem;">Real Estate Management Dashboard</h1>
+  <p class="text-muted" style="max-width: 720px; margin-top: 1.2rem; font-size: 1.05rem;">A property management interface designed to make property listing and management easier. The design includes a dashboard, property listings, property details, pricing, amenities, media, and agent information.</p>
+
+  <div class="meta-row">
+    <div class="meta-items">
+      <div>
+        <div class="meta-label">Category</div>
+        <div class="meta-value">UI/UX Design</div>
+      </div>
+      <div>
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Solo Designer</div>
+      </div>
+      <div>
+        <div class="meta-label">Year</div>
+        <div class="meta-value">2026</div>
+      </div>
+    </div>
+    <a href="#" class="btn">
+      View Prototype
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+    </a>
+  </div>
+
+  <div class="hero-image">
+    <img src="../assets/images/projects/real-estate-management-dashboard.png" alt="Real Estate Management Dashboard preview" />
+  </div>
+</div>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" style="background:#f2f2f2; border-radius:40px; margin:4rem 20px 20px;">
+  <div class="container" style="padding:2.5rem 0;">
+    <div style="max-width:720px; margin:0 auto; text-align:center;" class="fade-up">
+
+      <div class="badge">Get in Touch</div>
+      <h2>Contact Me</h2>
+      <p class="text-muted" style="margin:1rem 0 2rem;">
+        Have an idea or just a question? I'd love to hear from you.
+      </p>
+
+      <a
+        href="mailto:zunukandgwa07@gmail.com"
+        class="btn contact-email-btn"
+        style="font-size:1.1rem; padding:0.8rem 3rem;"
+      >
+        zunukandgwa07@gmail.com
+      </a>
+
+      <div style="margin-top:2.5rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+
+        <a href="mailto:zunukandgwa07@gmail.com" aria-label="Email" class="icon-btn">
+          <span class="icon-layer icon-muted">
+            <img src="https://framerusercontent.com/images/HNTAT2JAbYDFm2YGotEn7fSelQ.png?width=48&height=36" width="20" height="15" style="filter:grayscale(1); display:block;" alt="" />
+          </span>
+          <span class="icon-layer icon-color">
+            <img src="https://framerusercontent.com/images/HNTAT2JAbYDFm2YGotEn7fSelQ.png?width=48&height=36" width="20" height="15" style="filter:grayscale(0); display:block;" alt="" />
+          </span>
+        </a>
+
+        <a href="https://github.com/junu-lim" aria-label="GitHub" class="icon-btn" target="_blank" rel="noopener noreferrer">
+          <span class="icon-layer icon-muted">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="rgba(23,23,23,0.65)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg>
+          </span>
+          <span class="icon-layer icon-color">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#181717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg>
+          </span>
+        </a>
+
+        <a href="https://www.linkedin.com/in/junu-kandangwa-60344935b/" aria-label="LinkedIn" class="icon-btn" target="_blank" rel="noopener noreferrer">
+          <span class="icon-layer icon-muted">
+            <svg viewBox="0 0 20 20" width="20" height="20" fill="rgba(23,23,23,0.7)">
+              <path d="M 0 2.323 C 0 1.65 0.225 1.094 0.676 0.657 C 1.126 0.219 1.712 0 2.432 0 C 3.14 0 3.713 0.215 4.151 0.646 C 4.601 1.091 4.826 1.67 4.826 2.384 C 4.826 3.03 4.607 3.569 4.17 4 C 3.719 4.444 3.127 4.667 2.394 4.667 L 2.375 4.667 C 1.667 4.667 1.094 4.444 0.656 4 C 0.219 3.556 0 2.997 0 2.323 Z M 0.251 20 L 0.251 6.505 L 4.537 6.505 L 4.537 20 Z M 6.911 20 L 11.197 20 L 11.197 12.465 C 11.197 11.993 11.248 11.63 11.351 11.374 C 11.532 10.916 11.805 10.529 12.172 10.212 C 12.539 9.896 12.999 9.737 13.552 9.737 C 14.994 9.737 15.714 10.754 15.714 12.788 L 15.714 20 L 20 20 L 20 12.263 C 20 10.269 19.55 8.758 18.649 7.727 C 17.748 6.697 16.557 6.182 15.077 6.182 C 13.417 6.182 12.124 6.929 11.197 8.424 L 11.197 8.465 L 11.178 8.465 L 11.197 8.424 L 11.197 6.505 L 6.911 6.505 C 6.937 6.936 6.95 8.276 6.95 10.525 C 6.95 12.774 6.937 15.933 6.911 20 Z" />
+            </svg>
+          </span>
+          <span class="icon-layer icon-color">
+            <svg viewBox="0 0 20 20" width="20" height="20" fill="rgb(11,102,194)">
+              <path d="M 0 2.323 C 0 1.65 0.225 1.094 0.676 0.657 C 1.126 0.219 1.712 0 2.432 0 C 3.14 0 3.713 0.215 4.151 0.646 C 4.601 1.091 4.826 1.67 4.826 2.384 C 4.826 3.03 4.607 3.569 4.17 4 C 3.719 4.444 3.127 4.667 2.394 4.667 L 2.375 4.667 C 1.667 4.667 1.094 4.444 0.656 4 C 0.219 3.556 0 2.997 0 2.323 Z M 0.251 20 L 0.251 6.505 L 4.537 6.505 L 4.537 20 Z M 6.911 20 L 11.197 20 L 11.197 12.465 C 11.197 11.993 11.248 11.63 11.351 11.374 C 11.532 10.916 11.805 10.529 12.172 10.212 C 12.539 9.896 12.999 9.737 13.552 9.737 C 14.994 9.737 15.714 10.754 15.714 12.788 L 15.714 20 L 20 20 L 20 12.263 C 20 10.269 19.55 8.758 18.649 7.727 C 17.748 6.697 16.557 6.182 15.077 6.182 C 13.417 6.182 12.124 6.929 11.197 8.424 L 11.197 8.465 L 11.178 8.465 L 11.197 8.424 L 11.197 6.505 L 6.911 6.505 C 6.937 6.936 6.95 8.276 6.95 10.525 C 6.95 12.774 6.937 15.933 6.911 20 Z" />
+            </svg>
+          </span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Junu Kandangwa. All rights reserved.</footer>
+
+</div>
+<script>
+  (function() {
+    const elements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    elements.forEach(el => observer.observe(el));
+  })();
+</script>
+
+<script>
+  (function() {
+    const toggle = document.getElementById('menuToggle');
+    const links = document.getElementById('navLinks');
+    if (!toggle || !links) return;
+
+    function closeMenu() {
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    function openMenu() {
+      links.classList.add('open');
+      toggle.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    toggle.addEventListener('click', function() {
+      if (links.classList.contains('open')) closeMenu();
+      else openMenu();
+    });
+
+    links.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!links.classList.contains('open')) return;
+      if (links.contains(e.target) || toggle.contains(e.target)) return;
+      closeMenu();
+    });
+  })();
+</script>
+</body>
+</html>
